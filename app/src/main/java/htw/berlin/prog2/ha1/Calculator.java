@@ -13,6 +13,8 @@ public class Calculator {
     private double latestValue;
 
     private String latestOperation = "";
+    private int count = 0;
+
 
     /**
      * @return den aktuellen Bildschirminhalt als String
@@ -20,6 +22,8 @@ public class Calculator {
     public String readScreen() {
         return screen;
     }
+
+
 
     /**
      * Empfängt den Wert einer gedrückten Zifferntaste. Da man nur eine Taste auf einmal
@@ -45,10 +49,18 @@ public class Calculator {
      * im Ursprungszustand ist.
      */
     public void pressClearKey() {
-        screen = "0";
-        latestOperation = "";
-        latestValue = 0.0;
+        count=count+1;
+        if(count == 1){
+            screen = "0";
+        }
+        else {
+            screen = "0";
+            latestOperation = "";
+            latestValue = 0.0;
+            count = 0;
+        }
     }
+
 
     /**
      * Empfängt den Wert einer gedrückten binären Operationstaste, also eine der vier Operationen
@@ -81,7 +93,7 @@ public class Calculator {
             default -> throw new IllegalArgumentException();
         };
         screen = Double.toString(result);
-        if(screen.equals("NaN")) screen = "Error";
+        if(screen.equals("Infinity")) screen = "Error";
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
 
     }
